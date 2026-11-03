@@ -6,7 +6,9 @@
     "dev": "next dev --hostname 127.0.0.1",
     "build": "next build",
     "lint": "eslint .",
-    "test:pages": "node tests/pages-check.mjs"
+    "test:pages": "node tests/pages-check.mjs",
+    "dev:ai": "node --env-file=.env.local node_modules/next/dist/bin/next dev --hostname 127.0.0.1",
+    "build:ai": "node --env-file=.env.local node_modules/next/dist/bin/next build"
   },
   "dependencies": {
     "geist": "^1.4.2",

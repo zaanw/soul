@@ -1,3 +1,4 @@
 import type {NextConfig} from 'next';
-const config:NextConfig={output:'export',basePath:'/soul',trailingSlash:true,images:{unoptimized:true}};
+// OpenRouter needs a real Next.js server. This branch is not a static GitHub Pages build.
+const config:NextConfig={};
 export default config;
