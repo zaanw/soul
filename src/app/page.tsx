@@ -38,7 +38,7 @@ export default function Home(){
     setMessages(prev=>[...prev,userMsg]);
    }
    const mem=enabled?memory.map(m=>m.content):[];
-   const response=await fetch((process.env.NEXT_PUBLIC_SOUL_API_URL||'').replace(/\\/$/,'')+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:history.slice(-40),memory:mem}),signal:controller.signal});
+   const response=await fetch((process.env.NEXT_PUBLIC_SOUL_API_URL||'').replace(/\/$/,'')+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:history.slice(-40),memory:mem}),signal:controller.signal});
    if(!response.ok){const data=await response.json().catch(()=>({}));throw Error(data.error||'AI request failed: '+response.status);}
    if(!response.body)throw Error('Empty AI response');
    const reader=response.body.getReader(),decoder=new TextDecoder();let buffer='';
