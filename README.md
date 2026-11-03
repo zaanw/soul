@@ -1,37 +1,24 @@
-# SØUL — GitHub Pages edition
+# SØUL AI — OpenRouter server branch
 
-Your mind. Your rules.
+This branch builds on the original SØUL UI, with a server-side OpenRouter streaming API.
 
-Статическая версия интерфейса SØUL AI. **AI-сервер не подключён.** Это не полноценная серверная версия и не симулятор ответов AI.
+## Local setup (Windows 11)
 
-Работают адаптивный интерфейс, мобильное меню, темы Dark/Light/System, русский/английский, локальные черновики (создание, переименование, поиск, удаление и экспорт JSON), локальные пользовательские правила. Данные находятся в localStorage текущего браузера и удаляются при очистке данных сайта. Правила никуда не передаются: AI в этой версии нет. При отправке показывается честное сообщение о неподключённом AI. API-ключи не запрашиваются и не хранятся.
+1. Install Node.js 22.
+2. Run `npm ci`.
+3. Copy `.env.example` to `.env.local`.
+4. Set `OPENROUTER_API_KEY` and an exact `OPENROUTER_MODEL` ID from https://openrouter.ai/models.
+5. Run `npm run dev:ai` and open http://127.0.0.1:3000.
 
-Полное серверное приложение: https://github.com/zaanw/s-ulai
+The key is server-only and must never be committed. Do not deploy this branch to GitHub Pages: static Pages hosting cannot run Next.js API routes. Deploy to a Node.js server with authentication and request rate limits before allowing public use.
 
-## Windows 11
+Chats and manually entered memory are currently saved in this browser's localStorage, not synced between devices. The app forwards enabled memory rules to the model. OpenRouter charges may apply depending on model.
 
-Установите Node.js 22 LTS и Git:
-
-```powershell
-git clone https://github.com/zaanw/soul.git
-cd soul
+## Checks
+```bash
 npm ci
-npm run dev
-```
-
-Откройте `/soul/` на локальном порту 3000. Для статической сборки:
-
-```powershell
 npm run lint
 npm run build
 ```
 
-Файлы находятся в `out/`, base path — `/soul`.
-
-## Публикация
-
-Settings → Pages → Source → GitHub Actions.
-Workflow `.github/workflows/pages.yml` собирает и публикует сайт при push в `main`.
-Ожидаемый адрес после успешной публикации: https://zaanw.github.io/soul/
-
-GitHub Pages не выполняет API-маршруты Next.js и не запускает SQLite. Настоящий AI требует отдельного защищённого сервера. Секреты в статический сайт добавлять нельзя.
+The OpenRouter integration has not yet been verified with a live API key. Check streaming, errors, cancellation, regeneration, and persistence locally before merging.
