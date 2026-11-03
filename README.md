@@ -35,3 +35,11 @@ Workflow `.github/workflows/pages.yml` собирает и публикует с
 Ожидаемый адрес после успешной публикации: https://zaanw.github.io/soul/
 
 GitHub Pages не выполняет API-маршруты Next.js и не запускает SQLite. Настоящий AI требует отдельного защищённого сервера. Секреты в статический сайт добавлять нельзя.
+
+## OpenRouter через GitHub Pages (экспериментально)
+
+GitHub Pages не может безопасно хранить OpenRouter API-ключ. В ветке `feature/pages-openrouter-client` интерфейс может подключаться к отдельному серверу SØUL API. Укажите **только публичный URL API, без ключей** в GitHub Settings → Secrets and variables → Actions → Variables → `SOUL_API_URL`, например `https://api.example.com`. Pages workflow подставит его как `NEXT_PUBLIC_SOUL_API_URL` при сборке.
+
+Сервер должен поддерживать POST `/api/chat`, поток OpenAI-compatible SSE, HTTPS и CORS только для `https://zaanw.github.io`; также обязательны аутентификация и rate limiting перед публичным запуском, иначе чужие пользователи могут расходовать ваш API-баланс. Серверный код находится в отдельном PR #1 и пока не развёрнут. Без API сайт продолжит работать в режиме локальных черновиков.
+
+Не объединяйте PR до проверки `npm ci`, `npm run lint`, `npm run build` и браузерных тестов. GitHub Pages не может выполнить эти серверные функции самостоятельно.
